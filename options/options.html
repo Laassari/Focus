@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="options.css" />
+    <title>Focus - Options</title>
+  </head>
+  <body>
+    <main>
+      <h1>Options page</h1>
+
+      <form>
+        <label for="focusTimeInput">
+          <span>Focus Time (minutes)</span>
+          <input
+            type="number"
+            required
+            min="1"
+            max="1440"
+            name="focusTimeInput"
+            id="focusTimeInput"
+            placeholder="40"
+          />
+        </label>
+        <label for="restTimeInput">
+          <span>Rest Time (minutes)</span>
+          <input
+            type="number"
+            required
+            min="1"
+            max="1440"
+            name="restTimeInput"
+            id="restTimeInput"
+            placeholder="5"
+          />
+        </label>
+        <label for="extendedRestTimeInput">
+          <span>Extended Rest Time (minutes)</span>
+          <input
+            type="number"
+            required
+            min="1"
+            max="1440"
+            name="extendedRestTimeInput"
+            id="extendedRestTimeInput"
+            placeholder="10"
+          />
+        </label>
+        <label for="blockListInput">
+          <span>Block List (each entry in a new line)</span>
+          <textarea
+            name="blockListInput"
+            id="blockListInput"
+            cols="50"
+            rows="10"
+            required
+            placeholder="youtube.com
+facebook.com"
+          ></textarea>
+        </label>
+        <button>Save</button>
+      </form>
+    </main>
+
+    <script src="options.js"></script>
+  </body>
+</html>

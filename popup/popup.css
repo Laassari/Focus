@@ -1,0 +1,42 @@
+main {
+  width: 300px;
+  padding-inline: 10px;
+  padding-block: 5px;
+}
+
+h1 {
+  margin: 0;
+}
+
+.not-focused {
+  & .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    & button {
+      cursor: pointer;
+    }
+
+    & button.start-focus {
+      background-color: #93ff93;
+      border: 1px solid #65b400b5;
+    }
+
+    & button:not(button.options) {
+      font-size: 1.1rem;
+      padding: 5px 13px;
+      border-radius: 9px;
+      color: #005d43;
+    }
+
+    & button.options {
+      border: none;
+      background-color: transparent;
+      text-decoration: underline;
+      font-size: 0.9rem;
+      color: #5e5e5e;
+      display: inline-flex;
+    }
+  }
+}
