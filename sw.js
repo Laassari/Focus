@@ -53,8 +53,9 @@ async function handleRuntimeMessage(message, sender) {
     case "close-tab":
       chrome.tabs.remove(tab.id);
       break;
+
     case "start-focus-time":
-      setFocusTime(options);
+      startFocusTime(options);
       break;
 
     case "stop-focus-time":
@@ -65,7 +66,16 @@ async function handleRuntimeMessage(message, sender) {
       startRestTime(options);
       break;
 
-    default:
+    case "start-extended-rest-time":
+      startExtendedRestTime(options);
+      break;
+
+    case "stop-rest-time":
+      stopRestTime(options);
+      break;
+
+    case "stop-extended-rest-time":
+      stopExtendedRestTime(options);
       break;
   }
 }
@@ -79,7 +89,7 @@ async function checkFocusTime() {
   return state === focusStates.focusTime;
 }
 
-async function setFocusTime(options) {
+async function startFocusTime(options) {
   await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.focusTime });
 
   await chrome.alarms.create(focusStates.focusTime, {
@@ -99,4 +109,26 @@ async function startRestTime(options) {
   await chrome.alarms.create(focusStates.restTime, {
     delayInMinutes: parseInt(options.restTime, 10),
   });
+}
+
+async function startExtendedRestTime(options) {
+  await chrome.storage.local.set({
+    [APP_STATE_KEY]: focusStates.extendedRestTime,
+  });
+
+  await chrome.alarms.create(focusStates.extendedRestTime, {
+    delayInMinutes: parseInt(options.extendedRestTime, 10),
+  });
+}
+
+async function stopRestTime() {
+  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
+
+  await chrome.alarms.clear(focusStates.restTime);
+}
+
+async function stopExtendedRestTime() {
+  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
+
+  await chrome.alarms.clear(focusStates.extendedRestTime);
 }

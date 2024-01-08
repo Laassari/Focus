@@ -1,0 +1,6 @@
+.actions {
+  & button.start-focus {
+    background-color: #93ff93;
+    border: 1px solid #65b400b5;
+  }
+}

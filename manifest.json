@@ -16,7 +16,7 @@
     "service_worker": "sw.js"
   },
   "action": {
-    "default_popup": "popup/popup.html",
+    "default_popup": "popups/default/index.html",
     "default_icon": "images/logo/focus-32.png"
   },
   "options_ui": {
