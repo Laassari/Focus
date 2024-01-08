@@ -1,3 +1,11 @@
+const APP_STATE_KEY = "state";
+const focusStates = {
+  none: "NONE",
+  focusTime: "FOCUS_TIME",
+  restTime: "REST_TIME",
+  extendedRestTime: "EXTENDED_REST_TIME",
+};
+
 const optionsBtn = document.querySelector("button.options");
 
 optionsBtn.addEventListener("click", openOptionsPage);

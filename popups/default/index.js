@@ -9,19 +9,45 @@ startRestTimeBtn.addEventListener("click", startRestTime);
 startExtendedRestTimeBtn.addEventListener("click", startExtendedRestTime);
 
 async function startFocusTime() {
-  await chrome.runtime.sendMessage({ type: "start-focus-time" });
+  const options = await getOptions();
+
+  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.focusTime });
+
+  await chrome.alarms.create(focusStates.focusTime, {
+    delayInMinutes: parseInt(options.focusTime, 10),
+  });
 
   updatePopUp("/popups/focus-started/index.html");
 }
 
 async function startRestTime() {
-  await chrome.runtime.sendMessage({ type: "start-rest-time" });
+  const options = await getOptions();
+
+  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.restTime });
+
+  await chrome.alarms.create(focusStates.restTime, {
+    delayInMinutes: parseInt(options.restTime, 10),
+  });
 
   updatePopUp("/popups/rest-started/index.html");
 }
 
 async function startExtendedRestTime() {
-  await chrome.runtime.sendMessage({ type: "start-extended-rest-time" });
+  const options = await getOptions();
+
+  await chrome.storage.local.set({
+    [APP_STATE_KEY]: focusStates.extendedRestTime,
+  });
+
+  await chrome.alarms.create(focusStates.extendedRestTime, {
+    delayInMinutes: parseInt(options.extendedRestTime, 10),
+  });
 
   updatePopUp("/popups/rest-started/index.html");
+}
+
+async function getOptions() {
+  const { options } = await chrome.storage.local.get(["options"]);
+
+  return options;
 }

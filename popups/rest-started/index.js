@@ -1,16 +1,28 @@
 const stopRestTimeBtn = document.querySelector("button.stop-rest-time");
 
-stopRestTimeBtn.addEventListener("click", stopRestTime);
+stopRestTimeBtn.addEventListener("click", stopRestTing);
 
-async function stopRestTime() {
+async function stopRestTing() {
   const result = await chrome.storage.local.get(["state"]);
   const state = result.state;
 
   if (state === "REST_TIME") {
-    await chrome.runtime.sendMessage({ type: "stop-rest-time" });
+    await stopRestTime();
   } else {
-    await chrome.runtime.sendMessage({ type: "stop-extended-rest-time" });
+    await stopExtendedRestTime();
   }
 
   updatePopUp("/popups/default/index.html");
+}
+
+async function stopRestTime() {
+  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
+
+  await chrome.alarms.clear(focusStates.restTime);
+}
+
+async function stopExtendedRestTime() {
+  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
+
+  await chrome.alarms.clear(focusStates.extendedRestTime);
 }
