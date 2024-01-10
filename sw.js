@@ -9,6 +9,7 @@ const focusStates = {
 chrome.runtime.onInstalled.addListener(setDefaultOptions);
 chrome.webNavigation.onCommitted.addListener(handleNavigation);
 chrome.runtime.onMessage.addListener(handleRuntimeMessage);
+chrome.alarms.onAlarm.addListener(handleAlarms);
 
 async function setDefaultOptions() {
   const defaultOptions = {
@@ -45,6 +46,19 @@ async function handleNavigation(details) {
   }
 }
 
+async function handleAlarms(alarm) {
+  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
+
+  const options = {
+    type: "basic",
+    title: "Focus",
+    message: getMessageForNotifications(alarm.name),
+    iconUrl: "images/logo/focus-32.png",
+  };
+
+  chrome.notifications.create(options);
+}
+
 async function handleRuntimeMessage(message, sender) {
   const { tab } = sender;
 
@@ -62,4 +76,20 @@ async function checkFocusTime() {
   if (!state) return false;
 
   return state === focusStates.focusTime;
+}
+
+function getMessageForNotifications(key) {
+  switch (key) {
+    case focusStates.focusTime:
+      return `Focus time has ended.`;
+
+    case focusStates.restTime:
+      return `Rest time has ended.`;
+
+    case focusStates.extendedRestTime:
+      return `Extended rest time has ended.`;
+
+    default:
+      break;
+  }
 }

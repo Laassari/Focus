@@ -12,6 +12,7 @@ optionsBtn.addEventListener("click", openOptionsPage);
 
 document.addEventListener("load", redirectToRightPopUp);
 document.addEventListener("DOMContentLoaded", handleCountDown);
+chrome.storage.onChanged.addListener(handleStorageChange);
 
 async function handleCountDown() {
   const result = await chrome.storage.local.get(["state"]);
@@ -64,11 +65,12 @@ async function renderCountDown() {
   )}:${formatTime(minutes)}:${formatTime(seconds)}`;
 }
 
-async function redirectToRightPopUp() {
+async function redirectToRightPopUp(currentState) {
   const result = await chrome.storage.local.get(["state"]);
+  const state = currentState || result.state;
   let popUpName;
 
-  switch (result.state) {
+  switch (state) {
     case "NONE":
       popUpName = "default";
       break;
@@ -86,4 +88,10 @@ async function redirectToRightPopUp() {
   }
 
   updatePopUp(`/popups/${popUpName}/index.html`);
+}
+
+function handleStorageChange(changes) {
+  if (changes[APP_STATE_KEY]) {
+    redirectToRightPopUp(changes[APP_STATE_KEY].newValue);
+  }
 }
