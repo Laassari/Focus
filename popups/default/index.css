@@ -1,6 +1,7 @@
 .actions {
   & button.start-focus {
-    background-color: #93ff93;
-    border: 1px solid #65b400b5;
+    background-color: rgb(34, 197, 94);
+    border: none;
+    color: white;
   }
 }

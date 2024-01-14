@@ -54,15 +54,25 @@ function formatTime(time) {
 }
 
 async function renderCountDown() {
+  const countDownContainer = document.querySelector(".count-down");
+
+  if (!countDownContainer) {
+    console.error("Should have a count down container");
+    return;
+  }
+
   const alarms = await chrome.alarms.getAll();
   const alarm = alarms[0];
 
   if (!alarm) return;
 
   const { hours, minutes, seconds } = formatTimeStamp(alarm.scheduledTime);
-  document.querySelector(".count-down").textContent = `${formatTime(
-    hours
-  )}:${formatTime(minutes)}:${formatTime(seconds)}`;
+
+  countDownContainer.querySelector("#hours").textContent = formatTime(hours);
+  countDownContainer.querySelector("#minutes").textContent =
+    formatTime(minutes);
+  countDownContainer.querySelector("#seconds").textContent =
+    formatTime(seconds);
 }
 
 async function redirectToRightPopUp(currentState) {

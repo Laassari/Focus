@@ -5,7 +5,22 @@ main {
 }
 
 h1 {
-  margin: 0;
+  margin: 0 0 15px;
+}
+.count-down {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  font-size: 1.5rem;
+  margin: 15px 0;
+
+  & #hours,
+  & #minutes,
+  & #seconds {
+    color: #5e5e5e;
+    font-weight: bold;
+    font-variant: tabular-nums;
+  }
 }
 
 .actions {
@@ -15,13 +30,18 @@ h1 {
 
   & button {
     cursor: pointer;
+    border-radius: 9px;
+    padding: 10px;
+    font-size: 1.1rem;
+    border-width: 0;
+    background: transparent;
+    border: 1px solid #e5e7eb;
   }
 
-  & button:not(button.options) {
-    font-size: 1.1rem;
-    padding: 5px 13px;
-    border-radius: 9px;
-    color: #005d43;
+  & button.danger {
+    background-color: rgb(220, 38, 38);
+    color: white;
+    border: none;
   }
 
   & button.options {
