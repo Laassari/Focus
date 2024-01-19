@@ -47,16 +47,13 @@ async function handleNavigation(details) {
 }
 
 async function handleAlarms(alarm) {
-  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
+  chrome.tabs.create({
+    url: chrome.runtime.getURL(
+      `custom/timer-finished/index.html?completed_state=${alarm.name}`
+    ),
+  });
 
-  const options = {
-    type: "basic",
-    title: "Focus",
-    message: getMessageForNotifications(alarm.name),
-    iconUrl: "images/logo/focus-32.png",
-  };
-
-  chrome.notifications.create(options);
+  await updateState(alarm.name);
 }
 
 async function handleRuntimeMessage(message, sender) {
@@ -92,4 +89,24 @@ function getMessageForNotifications(key) {
     default:
       break;
   }
+}
+
+async function updateState(state) {
+  // todo use the last 4 states
+  let newSate = focusStates.none;
+
+  switch (state) {
+    case focusStates.focusTime:
+      newSate = focusStates.restTime;
+      break;
+
+    case focusStates.restTime:
+      newSate = focusStates.focusTime;
+      break;
+
+    default:
+      break;
+  }
+
+  await chrome.storage.local.set({ [APP_STATE_KEY]: newSate });
 }
