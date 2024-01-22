@@ -7,7 +7,8 @@ const focusStates = {
 };
 
 chrome.runtime.onInstalled.addListener(setDefaultOptions);
-chrome.webNavigation.onBeforeNavigate.addListener(handleNavigation);
+chrome.webNavigation.onBeforeNavigate.addListener(restrictBlockedWebsites);
+chrome.webNavigation.onHistoryStateUpdated.addListener(restrictBlockedWebsites)
 chrome.runtime.onMessage.addListener(handleRuntimeMessage);
 chrome.alarms.onAlarm.addListener(handleAlarms);
 
@@ -26,7 +27,7 @@ async function setDefaultOptions() {
   }
 }
 
-async function handleNavigation(details) {
+async function restrictBlockedWebsites(details) {
   const { options } = await chrome.storage.local.get(["options"]);
 
   const url = new URL(details.url);
