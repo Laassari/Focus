@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Blocked</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #e7e7e78a;
+      }
+
+      main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .wrapper {
+        width: 100%;
+        max-width: 500px;
+        background-color: #0000000f;
+        padding: 40px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 5px 1px #979797a1;
+        text-align: center;
+      }
+
+      h1 {
+        text-align: center;
+        font-weight: 500;
+      }
+
+      p {
+        font-size: 1.2rem;
+        font-weight: 300;
+        line-height: 1.4;
+      }
+
+      & button {
+        border-radius: 5px;
+        text-transform: capitalize;
+        font-size: 1rem;
+        padding: 5px 15px;
+        cursor: pointer;
+        border: 1px solid #a0a0a0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="wrapper">
+        <h1>Focus Time</h1>
+        <p>
+          This website is not allowed during focus time. Please come back after
+          focus time has finished or stop the current focus session in the
+          extension pop up
+        </p>
+        <button class="close">Close</button>
+      </div>
+    </main>
+
+    <script src="./index.js"></script>
+  </body>
+</html>

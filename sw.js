@@ -7,7 +7,7 @@ const focusStates = {
 };
 
 chrome.runtime.onInstalled.addListener(setDefaultOptions);
-chrome.webNavigation.onCommitted.addListener(handleNavigation);
+chrome.webNavigation.onBeforeNavigate.addListener(handleNavigation);
 chrome.runtime.onMessage.addListener(handleRuntimeMessage);
 chrome.alarms.onAlarm.addListener(handleAlarms);
 
@@ -34,14 +34,8 @@ async function handleNavigation(details) {
   const isFocusTime = await checkFocusTime();
 
   if (inBlackList && isFocusTime) {
-    chrome.tabs.update(details.tabId, { active: true });
-    chrome.scripting.executeScript({
-      target: { tabId: details.tabId },
-      files: ["replace-site-content.js"],
-    });
-    chrome.scripting.insertCSS({
-      target: { tabId: details.tabId },
-      files: ["replace-site-content.css"],
+    chrome.tabs.update(details.tabId, {
+      url: chrome.runtime.getURL("custom/page-blocked/index.html"),
     });
   }
 }
