@@ -8,7 +8,7 @@ const focusStates = {
 
 chrome.runtime.onInstalled.addListener(setDefaultOptions);
 chrome.webNavigation.onBeforeNavigate.addListener(restrictBlockedWebsites);
-chrome.webNavigation.onHistoryStateUpdated.addListener(restrictBlockedWebsites)
+chrome.webNavigation.onHistoryStateUpdated.addListener(restrictBlockedWebsites);
 chrome.runtime.onMessage.addListener(handleRuntimeMessage);
 chrome.alarms.onAlarm.addListener(handleAlarms);
 
@@ -35,6 +35,7 @@ async function restrictBlockedWebsites(details) {
   const isFocusTime = await checkFocusTime();
 
   if (inBlackList && isFocusTime) {
+    console.log("blocked url", url);
     chrome.tabs.update(details.tabId, {
       url: chrome.runtime.getURL("custom/page-blocked/index.html"),
     });
