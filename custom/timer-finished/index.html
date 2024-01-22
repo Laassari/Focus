@@ -3,15 +3,78 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        margin: 0;
+        background-color: #e7e7e78a;
+      }
+
+      main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .wrapper {
+        width: 100%;
+        max-width: 500px;
+        background-color: #0000000f;
+        padding: 40px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 5px 1px #979797a1;
+      }
+
+      h1 {
+        text-align: center;
+        font-weight: 500;
+      }
+
+      p {
+        font-size: 1rem;
+        font-weight: 300;
+        line-height: 1.4;
+      }
+
+      .actions {
+        display: flex;
+        gap: 20px;
+
+        & button {
+          flex: 1;
+          padding: 5px 0px;
+          border: none;
+          border-radius: 5px;
+          text-transform: capitalize;
+          font-size: 1rem;
+          cursor: pointer;
+
+          &.close {
+            border: 1px solid #a0a0a0;
+          }
+
+          &.main-action {
+            background-color: rgb(34, 197, 94);
+            color: white;
+          }
+        }
+      }
+    </style>
     <title>Custom Page</title>
   </head>
   <body>
-    <h1>Timer Finished</h1>
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum
-      eligendi, rerum, quae quaerat amet, laudantium repudiandae veniam numquam
-      nobis molestiae praesentium quos nam tempore vel asperiores accusamus.
-      Reprehenderit, perspiciatis incidunt?
-    </p>
+    <main>
+      <div class="wrapper">
+        <h1>Timer Finished</h1>
+        <p></p>
+
+        <div class="actions">
+          <button class="main-action"></button>
+          <button class="close">Close</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="./index.js"></script>
   </body>
 </html>

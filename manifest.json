@@ -10,7 +10,7 @@
     "128": "images/logo/focus-128.png",
     "256": "images/logo/focus-256.png"
   },
-  "permissions": ["storage", "webNavigation", "scripting", "alarms", "notifications"],
+  "permissions": ["storage", "webNavigation", "scripting", "alarms"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "sw.js"

@@ -47,13 +47,13 @@ async function handleNavigation(details) {
 }
 
 async function handleAlarms(alarm) {
+  const nextState = await updateState(alarm.name);
+
   chrome.tabs.create({
     url: chrome.runtime.getURL(
-      `custom/timer-finished/index.html?completed_state=${alarm.name}`
+      `custom/timer-finished/index.html?completed_state=${alarm.name}&next_state=${nextState}`
     ),
   });
-
-  await updateState(alarm.name);
 }
 
 async function handleRuntimeMessage(message, sender) {
@@ -75,38 +75,24 @@ async function checkFocusTime() {
   return state === focusStates.focusTime;
 }
 
-function getMessageForNotifications(key) {
-  switch (key) {
-    case focusStates.focusTime:
-      return `Focus time has ended.`;
-
-    case focusStates.restTime:
-      return `Rest time has ended.`;
-
-    case focusStates.extendedRestTime:
-      return `Extended rest time has ended.`;
-
-    default:
-      break;
-  }
-}
-
 async function updateState(state) {
-  // todo use the last 4 states
-  let newSate = focusStates.none;
+  let nextState = focusStates.none;
 
   switch (state) {
     case focusStates.focusTime:
-      newSate = focusStates.restTime;
+      nextState = focusStates.restTime;
       break;
 
     case focusStates.restTime:
-      newSate = focusStates.focusTime;
+    case focusStates.extendedRestTime:
+      nextState = focusStates.focusTime;
       break;
 
     default:
       break;
   }
 
-  await chrome.storage.local.set({ [APP_STATE_KEY]: newSate });
+  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
+
+  return nextState;
 }
