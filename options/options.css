@@ -64,5 +64,11 @@ form {
     border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
+
+    &:focus {
+      box-shadow: rgb(255, 255, 255) 0px 0px 0px 2px,
+        rgb(161, 161, 170) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+      outline: none;
+    }
   }
 }

@@ -35,7 +35,7 @@ function openOptionsPage() {
   chrome.runtime.openOptionsPage();
 }
 
-function formatTimeStamp(timeStamp) {
+function timeStampToUnits(timeStamp) {
   const timeDiffSeconds = (timeStamp - Date.now()) / 1000;
 
   const hours = parseInt(timeDiffSeconds / (60 * 60));
@@ -46,10 +46,14 @@ function formatTimeStamp(timeStamp) {
 
   const seconds = parseInt(remainingSeconds % 60);
 
-  return { hours, minutes, seconds };
+  return {
+    hours: formatTimeUnit(hours),
+    minutes: formatTimeUnit(minutes),
+    seconds: formatTimeUnit(seconds),
+  };
 }
 
-function formatTime(time) {
+function formatTimeUnit(time) {
   return String(time).padStart(2, "0");
 }
 
@@ -66,13 +70,11 @@ async function renderCountDown() {
 
   if (!alarm) return;
 
-  const { hours, minutes, seconds } = formatTimeStamp(alarm.scheduledTime);
+  const { hours, minutes, seconds } = timeStampToUnits(alarm.scheduledTime);
 
-  countDownContainer.querySelector("#hours").textContent = formatTime(hours);
-  countDownContainer.querySelector("#minutes").textContent =
-    formatTime(minutes);
-  countDownContainer.querySelector("#seconds").textContent =
-    formatTime(seconds);
+  countDownContainer.querySelector("#hours").textContent = hours;
+  countDownContainer.querySelector("#minutes").textContent = minutes;
+  countDownContainer.querySelector("#seconds").textContent = seconds;
 }
 
 async function redirectToRightPopUp(currentState) {
