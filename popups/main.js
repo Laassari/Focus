@@ -94,6 +94,7 @@ async function redirectToRightPopUp(currentState) {
     case "REST_TIME":
     case "EXTENDED_REST_TIME":
       popUpName = "rest-started";
+      break;
 
     default:
       popUpName = "default";
