@@ -43,7 +43,8 @@ async function restrictBlockedWebsites(details) {
 }
 
 async function handleAlarms(alarm) {
-  const nextState = await updateState(alarm.name);
+  await updateState(alarm.name);
+  const nextState = await getNextState(alarm.name);
 
   chrome.tabs.create({
     url: chrome.runtime.getURL(
@@ -71,7 +72,22 @@ async function checkFocusTime() {
   return state === focusStates.focusTime;
 }
 
-async function updateState(state) {
+async function updateState(currentState) {
+  const { pastStates = {} } = await chrome.storage.local.get(["pastStates"]);
+
+  const todayDateIso = new Date().toISOString().slice(0, 10);
+  todayState = pastStates[todayDateIso] || [];
+
+  const newStates = {
+    ...pastStates,
+    [todayDateIso]: [...todayState, currentState],
+  };
+
+  await chrome.storage.local.set({ pastStates: newStates });
+  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
+}
+
+async function getNextState(state) {
   let nextState = focusStates.none;
 
   switch (state) {
@@ -87,8 +103,6 @@ async function updateState(state) {
     default:
       break;
   }
-
-  await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
 
   return nextState;
 }
