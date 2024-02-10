@@ -76,33 +76,35 @@ async function updateState(currentState) {
   const { pastStates = {} } = await chrome.storage.local.get(["pastStates"]);
 
   const todayDateIso = new Date().toISOString().slice(0, 10);
-  todayState = pastStates[todayDateIso] || [];
+  const todayStates = pastStates[todayDateIso] || [];
 
   const newStates = {
     ...pastStates,
-    [todayDateIso]: [...todayState, currentState],
+    [todayDateIso]: [...todayStates, currentState],
   };
 
   await chrome.storage.local.set({ pastStates: newStates });
   await chrome.storage.local.set({ [APP_STATE_KEY]: focusStates.none });
 }
 
-async function getNextState(state) {
-  let nextState = focusStates.none;
+async function getNextState() {
+  const { pastStates } = await chrome.storage.local.get(["pastStates"]);
+  const todayDateIso = new Date().toISOString().slice(0, 10);
+  const todayStates = pastStates[todayDateIso];
+  const lastState = todayStates.at(-1);
 
-  switch (state) {
-    case focusStates.focusTime:
-      nextState = focusStates.restTime;
-      break;
-
-    case focusStates.restTime:
-    case focusStates.extendedRestTime:
-      nextState = focusStates.focusTime;
-      break;
-
-    default:
-      break;
+  if (
+    [focusStates.restTime, focusStates.extendedRestTime].includes(lastState)
+  ) {
+    return focusStates.focusTime;
   }
 
-  return nextState;
+  // after every three short rests we do an extended rest
+  const shortRestsCount = todayStates
+    .slice(todayStates.length - 6 - 1)
+    .filter((s) => s === focusStates.restTime).length;
+
+  if (shortRestsCount === 3) return focusStates.extendedRestTime;
+
+  return focusStates.restTime;
 }
