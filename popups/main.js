@@ -7,8 +7,10 @@ const focusStates = {
 };
 
 const optionsBtn = document.querySelector("button.options");
+const dashboardBtn = document.querySelector("button.dashboard");
 
 optionsBtn.addEventListener("click", openOptionsPage);
+dashboardBtn?.addEventListener("click", openDashboardPage);
 
 document.addEventListener("DOMContentLoaded", redirectToRightPopUp);
 document.addEventListener("DOMContentLoaded", handleCountDown);
@@ -35,6 +37,12 @@ async function updatePopUp(popup) {
 
 function openOptionsPage() {
   chrome.runtime.openOptionsPage();
+}
+
+function openDashboardPage() {
+  chrome.tabs.create({
+    url: chrome.runtime.getURL("custom/dashboard/index.html"),
+  });
 }
 
 function timeStampToUnits(timeStamp) {

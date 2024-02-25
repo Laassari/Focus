@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <script src="./chart.js"></script>
+    <script src="./index.js"></script>
+    <style>
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        margin-bottom: 25px;
+      }
+
+      h2 {
+        margin-top: 35px;
+      }
+
+      .today-carts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 1px;
+
+        .card {
+          padding: 20px;
+          border: 1px solid;
+          border-radius: 5px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Dashboard</h1>
+
+      <h2>Today's sessions</h2>
+      <div class="today-carts">
+        <div class="card focus-sessions">
+          <span>Focus sessions</span>
+          <span class="value">0</span>
+        </div>
+        <div class="card focus-time">
+          <span>Focused Time (minutes)</span>
+          <span class="value">0</span>
+        </div>
+        <div class="card rest-sessions">
+          <span>Rest Sessions</span>
+          <span class="value">0</span>
+        </div>
+        <div class="card rest-time">
+          <span>Rest Time (minutes)</span>
+          <span class="value">0</span>
+        </div>
+      </div>
+
+      <h2>Summary of the month</h2>
+      <div class="month-summary">
+        <canvas id="chart"></canvas>
+      </div>
+    </main>
+  </body>
+</html>

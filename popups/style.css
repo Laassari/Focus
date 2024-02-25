@@ -44,12 +44,17 @@ h1 {
     border: none;
   }
 
-  & button.options {
-    border: none;
-    background-color: transparent;
-    text-decoration: underline;
-    font-size: 0.9rem;
-    color: #5e5e5e;
-    display: inline-flex;
+  & .links {
+    display: flex;
+    justify-content: space-between;
+
+    & button {
+      border: none;
+      background-color: transparent;
+      text-decoration: underline;
+      font-size: 0.9rem;
+      color: #5e5e5e;
+      display: inline-flex;
+    }
   }
 }
