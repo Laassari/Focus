@@ -1,3 +1,10 @@
+# Focus
+
+https://github.com/Laassari/Focus/assets/22548931/d99b669c-ca7a-44e7-b256-5420a7199073
+
+
+
+
 A chrome extension to help focus on work in intervals using the [Pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique).
 
 You can customise the focus time, rest time and extended rest time.
