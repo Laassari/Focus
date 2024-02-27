@@ -24,18 +24,32 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
-        gap: 1px;
+        gap: 10px;
 
         .card {
           padding: 20px;
           border: 1px solid;
           border-radius: 5px;
+          border-style: outset;
+          border-width: 2px;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           gap: 10px;
           font-size: 1rem;
+
+          & span:not(.value) {
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            font-weight: 500;
+          }
+
+          & span.value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #646464;
+          }
         }
       }
     </style>
